@@ -11,7 +11,7 @@ sub new {
     die 'api_key required' unless defined $params{api_key};
     return bless {
         debug   => $params{debug},
-        api_key => $params{api_key} || die 'api_key is required',
+        api_key => ($params{api_key} || die 'api_key is required'),
         ua      => LWP::UserAgent->new(
             timeout => exists $params{timeout} ? $params{timeout} : 5,
         ),
