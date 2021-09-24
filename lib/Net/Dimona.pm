@@ -28,8 +28,10 @@ sub _request {
         'Content-Type' => 'application/json',
         ($params ? ('Content' => encode_json($params)) : ())
     );
-    return decode_json($res->decoded_content);
-
+    my $data;
+    eval { $data = decode_json($res->decoded_content) };
+    $data = { error => $res->decoded_content } unless $data;
+    return $data;
 }
 
 sub create_order {
